@@ -1,0 +1,8 @@
+C:\Users\misam\source\repos\Mobile Control System\[TEST] Xamarin Server + Client github\CMD-Server\Server\bin\Release\Server.exe.config
+C:\Users\misam\source\repos\Mobile Control System\[TEST] Xamarin Server + Client github\CMD-Server\Server\bin\Release\Server.exe
+C:\Users\misam\source\repos\Mobile Control System\[TEST] Xamarin Server + Client github\CMD-Server\Server\bin\Release\Server.pdb
+C:\Users\misam\source\repos\Mobile Control System\[TEST] Xamarin Server + Client github\CMD-Server\Server\obj\Release\Server.csproj.AssemblyReference.cache
+C:\Users\misam\source\repos\Mobile Control System\[TEST] Xamarin Server + Client github\CMD-Server\Server\obj\Release\Server.csproj.SuggestedBindingRedirects.cache
+C:\Users\misam\source\repos\Mobile Control System\[TEST] Xamarin Server + Client github\CMD-Server\Server\obj\Release\Server.csproj.CoreCompileInputs.cache
+C:\Users\misam\source\repos\Mobile Control System\[TEST] Xamarin Server + Client github\CMD-Server\Server\obj\Release\Server.exe
+C:\Users\misam\source\repos\Mobile Control System\[TEST] Xamarin Server + Client github\CMD-Server\Server\obj\Release\Server.pdb

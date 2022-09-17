@@ -1,0 +1,15 @@
+Client.MainActivity, Client;crc643fa3c810459e540c.MainActivity
+Client.MainActivity;crc643fa3c810459e540c.MainActivity
+client.MainActivity;crc643fa3c810459e540c.MainActivity
+Client.DB_Helper.Helper, Client;crc645239cf42a3984e65.Helper
+Client.DB_Helper.Helper;crc645239cf42a3984e65.Helper
+client.db_helper.Helper;crc645239cf42a3984e65.Helper
+Client.Activities.Connect, Client;crc640ed5f944e1e69828.Connect
+Client.Activities.Connect;crc640ed5f944e1e69828.Connect
+client.activities.Connect;crc640ed5f944e1e69828.Connect
+Client.Activities.Control, Client;crc640ed5f944e1e69828.Control
+Client.Activities.Control;crc640ed5f944e1e69828.Control
+client.activities.Control;crc640ed5f944e1e69828.Control
+Client.Activities.SignUp, Client;crc640ed5f944e1e69828.SignUp
+Client.Activities.SignUp;crc640ed5f944e1e69828.SignUp
+client.activities.SignUp;crc640ed5f944e1e69828.SignUp

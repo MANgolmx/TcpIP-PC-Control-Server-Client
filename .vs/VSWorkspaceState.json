@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\AND-Client",
+    "\\CMD-Server",
+    "\\CMD-Server\\Server"
+  ],
+  "SelectedNode": "\\CMD-Server\\Server\\Program.cs",
+  "PreviewInSolutionExplorer": false
+}
