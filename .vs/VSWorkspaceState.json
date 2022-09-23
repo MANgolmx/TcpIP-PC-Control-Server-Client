@@ -2,9 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\AND-Client",
-    "\\CMD-Server",
-    "\\CMD-Server\\Server"
+    "\\AND-Client\\Client",
+    "\\AND-Client\\Client\\Activities",
+    "\\CMD-Server"
   ],
-  "SelectedNode": "\\CMD-Server\\Server\\Program.cs",
+  "SelectedNode": "\\AND-Client\\Client\\Activities\\Control.cs",
   "PreviewInSolutionExplorer": false
 }

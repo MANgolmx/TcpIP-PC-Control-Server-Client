@@ -40,74 +40,96 @@ namespace Client
 			}
 		}
 		
-		public partial class Id
+		public partial class Drawable
 		{
 			
 			// aapt resource value: 0x7F010000
-			public const int btnBack = 2130771968;
+			public const int ServerIcon = 2130771968;
 			
-			// aapt resource value: 0x7F010001
-			public const int btnConnect = 2130771969;
+			static Drawable()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
 			
-			// aapt resource value: 0x7F010002
-			public const int btnCreate = 2130771970;
+			private Drawable()
+			{
+			}
+		}
+		
+		public partial class Id
+		{
 			
-			// aapt resource value: 0x7F010003
-			public const int btnLogout = 2130771971;
+			// aapt resource value: 0x7F020000
+			public const int btnBack = 2130837504;
 			
-			// aapt resource value: 0x7F010004
-			public const int btnShutdown = 2130771972;
+			// aapt resource value: 0x7F020001
+			public const int btnConnect = 2130837505;
 			
-			// aapt resource value: 0x7F010005
-			public const int btnSign = 2130771973;
+			// aapt resource value: 0x7F020002
+			public const int btnCreate = 2130837506;
 			
-			// aapt resource value: 0x7F010006
-			public const int btnSignUp = 2130771974;
+			// aapt resource value: 0x7F020003
+			public const int btnLogout = 2130837507;
 			
-			// aapt resource value: 0x7F010007
-			public const int btnSleep = 2130771975;
+			// aapt resource value: 0x7F020004
+			public const int btnOpenApp = 2130837508;
 			
-			// aapt resource value: 0x7F010008
-			public const int btnTakeScreen = 2130771976;
+			// aapt resource value: 0x7F020005
+			public const int btnShutdown = 2130837509;
 			
-			// aapt resource value: 0x7F010009
-			public const int edtEmail = 2130771977;
+			// aapt resource value: 0x7F020006
+			public const int btnSign = 2130837510;
 			
-			// aapt resource value: 0x7F01000E
-			public const int edtfullname = 2130771982;
+			// aapt resource value: 0x7F020007
+			public const int btnSignUp = 2130837511;
 			
-			// aapt resource value: 0x7F01000A
-			public const int edtIpAddress = 2130771978;
+			// aapt resource value: 0x7F020008
+			public const int btnSleep = 2130837512;
 			
-			// aapt resource value: 0x7F01000B
-			public const int edtMobile = 2130771979;
+			// aapt resource value: 0x7F020009
+			public const int btnTakeScreen = 2130837513;
 			
-			// aapt resource value: 0x7F01000F
-			public const int edtpassword = 2130771983;
+			// aapt resource value: 0x7F02000A
+			public const int edtAppName = 2130837514;
 			
-			// aapt resource value: 0x7F01000C
-			public const int edtPort = 2130771980;
+			// aapt resource value: 0x7F02000B
+			public const int edtEmail = 2130837515;
 			
-			// aapt resource value: 0x7F01000D
-			public const int edtTime = 2130771981;
+			// aapt resource value: 0x7F020010
+			public const int edtfullname = 2130837520;
 			
-			// aapt resource value: 0x7F010010
-			public const int edtusername = 2130771984;
+			// aapt resource value: 0x7F02000C
+			public const int edtIpAddress = 2130837516;
 			
-			// aapt resource value: 0x7F010011
-			public const int imageView = 2130771985;
+			// aapt resource value: 0x7F02000D
+			public const int edtMobile = 2130837517;
 			
-			// aapt resource value: 0x7F010012
-			public const int textView1 = 2130771986;
+			// aapt resource value: 0x7F020011
+			public const int edtpassword = 2130837521;
 			
-			// aapt resource value: 0x7F010013
-			public const int txtOr = 2130771987;
+			// aapt resource value: 0x7F02000E
+			public const int edtPort = 2130837518;
 			
-			// aapt resource value: 0x7F010014
-			public const int txtpassword = 2130771988;
+			// aapt resource value: 0x7F02000F
+			public const int edtTime = 2130837519;
 			
-			// aapt resource value: 0x7F010015
-			public const int txtusername = 2130771989;
+			// aapt resource value: 0x7F020012
+			public const int edtusername = 2130837522;
+			
+			// aapt resource value: 0x7F020013
+			public const int imageView = 2130837523;
+			
+			// aapt resource value: 0x7F020014
+			public const int textView1 = 2130837524;
+			
+			// aapt resource value: 0x7F020015
+			public const int txtOr = 2130837525;
+			
+			// aapt resource value: 0x7F020016
+			public const int txtpassword = 2130837526;
+			
+			// aapt resource value: 0x7F020017
+			public const int txtusername = 2130837527;
 			
 			static Id()
 			{
@@ -122,17 +144,17 @@ namespace Client
 		public partial class Layout
 		{
 			
-			// aapt resource value: 0x7F020000
-			public const int Connect = 2130837504;
+			// aapt resource value: 0x7F030000
+			public const int Connect = 2130903040;
 			
-			// aapt resource value: 0x7F020001
-			public const int Control = 2130837505;
+			// aapt resource value: 0x7F030001
+			public const int Control = 2130903041;
 			
-			// aapt resource value: 0x7F020002
-			public const int Main = 2130837506;
+			// aapt resource value: 0x7F030002
+			public const int Main = 2130903042;
 			
-			// aapt resource value: 0x7F020003
-			public const int SignUp = 2130837507;
+			// aapt resource value: 0x7F030003
+			public const int SignUp = 2130903043;
 			
 			static Layout()
 			{
@@ -147,8 +169,8 @@ namespace Client
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7F030000
-			public const int app_name = 2130903040;
+			// aapt resource value: 0x7F040000
+			public const int app_name = 2130968576;
 			
 			static String()
 			{

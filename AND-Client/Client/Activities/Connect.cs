@@ -8,7 +8,8 @@ using System.Net.Sockets;
 
 namespace Client.Activities
 {
-    [Activity(MainLauncher = true)]
+    [Activity(MainLauncher = true, Icon = "@drawable/ServerIcon")]
+
     public class Connect : Activity
     {
         private EditText edtIp, edtport;
@@ -37,15 +38,21 @@ namespace Client.Activities
                     }
                     else
                     {
-                        Toast.MakeText(this, "Connection faild!", ToastLength.Short).Show();
+                        Toast.MakeText(this, "Connection failed!", ToastLength.Short).Show();
                     }
                 }
                 catch (Exception x)
                 {
-                    Toast.MakeText(this, "Connection feild!", ToastLength.Short).Show();
+                    Toast.MakeText(this, "Connection failed!", ToastLength.Short).Show();
                     Toast.MakeText(this, "" + x, ToastLength.Short).Show();
                 }
             };
         }
+
+        public override void OnBackPressed()
+        {
+            //base.OnBackPressed();
+        }
+
     }
 }

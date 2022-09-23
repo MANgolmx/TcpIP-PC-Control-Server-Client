@@ -8,7 +8,6 @@ EditText;obj\Debug\90\res\layout\main.xml
 EditText;obj\Debug\90\res\layout\signup.xml
 ImageView;obj\Debug\90\res\layout\control.xml
 LinearLayout;obj\Debug\90\res\layout\connect.xml
-LinearLayout;obj\Debug\90\res\layout\control.xml
 LinearLayout;obj\Debug\90\res\layout\main.xml
 LinearLayout;obj\Debug\90\res\layout\signup.xml
 RelativeLayout;obj\Debug\90\res\layout\control.xml

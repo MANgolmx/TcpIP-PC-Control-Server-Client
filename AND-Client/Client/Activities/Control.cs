@@ -6,39 +6,61 @@ using Client.Common;
 using System;
 using System.Net.Sockets;
 using System.Text;
+using System.Timers;
 
 namespace Client.Activities
 {
     [Activity]
     public class Control : Activity
     {
-        private Button btnTakeScreen, btnSleep, btnShutdown ,btnLogout;
+        private Button btnTakeScreen, btnSleep, btnShutdown, btnLogout, btnOpenApp;
         private ImageView imageView;
-        private EditText edtTime;
+        private EditText edtTime, edtAppName;
+        private Timer checkConnectionTimer;
 
         NetworkStream stream;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
+                        //Preparing connection\\
             base.OnCreate(savedInstanceState);
             var client = Connection.Instance.client;
-            //client.SendTimeout = 5000;
-            //client.ReceiveTimeout = 10000;
+            client.SendTimeout = 5000;
+            client.ReceiveTimeout = 10000;
 
-            // Seting view
+            checkConnectionTimer = new Timer(1000);
+            checkConnectionTimer.Elapsed += CheckConnection;
+            checkConnectionTimer.AutoReset = true;
+            checkConnectionTimer.Start();
+
+                        //Seting view\\
             SetContentView(Resource.Layout.Control);
             btnTakeScreen = FindViewById<Button>(Resource.Id.btnTakeScreen);
             btnSleep = FindViewById<Button>(Resource.Id.btnSleep);
             btnShutdown = FindViewById<Button>(Resource.Id.btnShutdown);
             btnLogout = FindViewById<Button>(Resource.Id.btnLogout);
+            btnOpenApp = FindViewById<Button>(Resource.Id.btnOpenApp);
             imageView = FindViewById<ImageView>(Resource.Id.imageView);
             edtTime = FindViewById<EditText>(Resource.Id.edtTime);
+            edtAppName = FindViewById<EditText>(Resource.Id.edtAppName);
+
+
+
+            void CheckConnection(Object source, System.Timers.ElapsedEventArgs e)
+            {
+                if (client.Client.Poll(0, SelectMode.SelectRead))
+                {
+                    disconnect(client);
+                }
+            }
+
+                     //Button clicks\\
 
             btnSleep.Click += delegate 
             {
                 try {
                     stream = client.GetStream();
-                    String msg = "SLP3";
+                    String msg = "SLP";
                     byte[] message = Encoding.ASCII.GetBytes(msg);
                     stream.Write(message, 0, message.Length);
                 }
@@ -51,7 +73,7 @@ namespace Client.Activities
             {
                 try {
                     stream = client.GetStream();
-                    String msg = "SHTD4 " + edtTime.Text;
+                    String msg = "SHTD" + edtTime.Text;
                     byte[] message = Encoding.ASCII.GetBytes(msg);
                     stream.Write(message, 0, message.Length);
                 } 
@@ -64,7 +86,7 @@ namespace Client.Activities
             {
                 try {
                     stream = client.GetStream();
-                    String msg = "TSC2";
+                    String msg = "TSC";
                     byte[] message = Encoding.ASCII.GetBytes(msg);
                     stream.Write(message, 0, message.Length);
                     var data = getData(client);
@@ -76,15 +98,29 @@ namespace Client.Activities
                 }
             };
 
+            btnOpenApp.Click += delegate
+            {
+                if (edtAppName.Text == "" || edtAppName.Text == " ") return;
+                try {
+                    stream = client.GetStream();
+                    String msg = "OPNAP " + edtAppName.Text;
+                    byte[] message = Encoding.ASCII.GetBytes(msg);
+                    stream.WriteAsync(message, 0, message.Length);
+                }
+                catch (Exception e) {
+                    disconnect(client);
+                }
+            };
+
             btnLogout.Click += delegate 
             {
                 try {
                     stream = client.GetStream();
-                    String msg = "LGT1";
+                    String msg = "LGT";
                     byte[] message = Encoding.ASCII.GetBytes(msg);
                     stream.Write(message, 0, message.Length);
                 }
-                catch(Exception e) { }
+                catch(Exception e) { ; }
                 finally {
                     disconnect(client);
                 }
@@ -93,8 +129,8 @@ namespace Client.Activities
 
         public void disconnect(TcpClient client)
         {
-            StartActivity(typeof(Connect));
             client.Close();
+            StartActivity(typeof(Connect));
         }
 
         public byte[] getData(TcpClient client)
@@ -121,6 +157,11 @@ namespace Client.Activities
                 bytesLeft -= curDataSize;
             }
             return data;
+        }
+
+        public override void OnBackPressed()
+        {
+            //base.OnBackPressed();
         }
     }
 }

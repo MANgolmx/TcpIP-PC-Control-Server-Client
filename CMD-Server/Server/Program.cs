@@ -1,20 +1,26 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
 using System.Linq;
+using System.Timers;
 
 namespace Server
 {
+
     public static class Program
     {
         public static TcpClient client;
+
         private static TcpListener listener;
         private static string ipString;
+        private static System.Timers.Timer checkConnectionTimer;
+
         static void Main(string[] args)
         {
             //IPAddress[] localIp = Dns.GetHostAddresses(Dns.GetHostName());
@@ -25,6 +31,10 @@ namespace Server
             //        ipString = address.ToString();
             //    }
             //}
+
+            checkConnectionTimer = new System.Timers.Timer(1000);
+            checkConnectionTimer.Elapsed += CheckConnection;
+            checkConnectionTimer.AutoReset = true;
 
             ipString = "192.168.1.102";
 
@@ -37,75 +47,116 @@ namespace Server
             ===============================================================",
             ep.Address, ep.Port);
 
-            clientConnection:
+            ClientConnnection();
 
-            client = listener.AcceptTcpClient();
-            Console.WriteLine("Client connected! \n");
 
-            while (client.Connected)
+
+            //****************************************
+            //              FUNCTIONS
+            //****************************************
+
+            void TransferingData()
             {
-                try
+                while (client.Connected)
                 {
-                    const int bytesize = 1024 * 1024;
-                    byte[] buffer = new byte[bytesize];
-                    string x = client.GetStream().Read(buffer, 0, bytesize).ToString();
-                    var data = ASCIIEncoding.ASCII.GetString(buffer);
-
-                    if (data.ToUpper().Contains("LGT1"))
+                    try
                     {
-                        Console.WriteLine("Client disconnected! \n");
+                        const int bytesize = 1024 * 1024;
+                        byte[] buffer = new byte[bytesize];
+                        string x = client.GetStream().Read(buffer, 0, bytesize).ToString();
+                        var data = ASCIIEncoding.ASCII.GetString(buffer);
+
+                        if (data.ToUpper().Contains("LGT"))
+                        {
+                            Console.WriteLine("Client disconnected! \n");
+
+                            //client.Dispose();
+                            //client.Close();
+
+                            ClientConnnection();
+                            continue;
+                        }
+                        else if (data.ToUpper().Contains("SHTD"))
+                        {
+                            Console.WriteLine("Pc is going to Shutdown!");
+                            data = data.Replace("SHTD4", "");
+                            data = new String(data.Where(Char.IsDigit).ToArray());
+                            if (data == "" || data == "0") data = "1";
+                            Shutdown(Int32.Parse(data));
+                        }
+                        else if (data.ToUpper().Contains("OPNAP"))
+                        {
+                            Console.Write("Opening app ");
+                            data = data.Replace("OPNAP ", "");
+                            data = new String(data.Where(Char.IsLetterOrDigit).ToArray());
+                            Console.WriteLine(data.ToUpper());
+
+                            var allFiles = Directory.GetFiles("C:\\Programs", data.ToUpper() + ".lnk");
+                            foreach (var file in allFiles)
+                                Process.Start(file);
+                        }
+                        else if (data.ToUpper().Contains("SLP"))
+                        {
+                            Console.WriteLine("Pc is going to Sleep Mode");
+                            Sleep();
+                        }
+                        else if (data.ToUpper().Contains("TSC"))
+                        {
+                            Console.WriteLine("Taking screenshot");
+
+                            var bitmap = SaveScreenshot();
+                            var stream = new MemoryStream();
+                            bitmap.Save(stream, ImageFormat.Bmp);
+                            sendData(stream.ToArray(), client.GetStream());
+                            Console.WriteLine("Screenshot sent");
+                        }
+                    }
+                    catch (Exception exc)
+                    {
+                        Console.WriteLine("Something went wrong! \n");
 
                         client.Dispose();
                         client.Close();
 
-                        goto clientConnection;
+                        Console.WriteLine("Started listening");
+                        ClientConnnection();
+                        continue;
                     }
-                    else if (data.ToUpper().Contains("TSC2"))
-                    {
-                        Console.WriteLine("Take Screenshot!");
 
-                        var bitmap = SaveScreenshot();
-                        var stream = new MemoryStream();
-                        bitmap.Save(stream, ImageFormat.Bmp);
-                        sendData(stream.ToArray(), client.GetStream());
-                    }
-                    else if (data.ToUpper().Contains("SLP3"))
-                    {
-                        Console.WriteLine("Pc is going to Sleep Mode!");
-                        Sleep();
-                    }
-                    else if (data.ToUpper().Contains("SHTD4"))
-                    {
-                        Console.WriteLine("Pc is going to Shutdown!");
-                        data = data.Replace("SHTD4", "");
-                        data = new String(data.Where(Char.IsDigit).ToArray());
-                        if (data == "" || data == "0") data = "1";
-                        Shutdown(Int32.Parse(data));
-                    }
-                }
-                catch (Exception exc)
-                {
-                    Console.WriteLine("Something went wrong! \n");
-
-                    client.Dispose();
-                    client.Close();
-
-                    goto clientConnection;
                 }
             }
 
-            if (!client.Connected)
-                goto clientConnection;
+            void CheckConnection(Object source, System.Timers.ElapsedEventArgs e)
+            {
+                if (client.Client.Poll(0, SelectMode.SelectRead))
+                {
+                    Console.WriteLine("Client disconnected! \n");
+
+                    ClientConnnection();
+                }
+            }
+
+            void ClientConnnection()
+            {
+                checkConnectionTimer.Enabled = false;
+
+                client = listener.AcceptTcpClient();
+                checkConnectionTimer.Enabled = true;
+                Console.WriteLine("Client connected!");
+
+                TransferingData();
+            }
 
             void Shutdown(int time)
             {
-                System.Diagnostics.Process.Start("Shutdown", "-s -t " + time);
+                Process.Start("Shutdown", "-s -t " + time);
                 Environment.Exit(0);
             }
 
             void Sleep()
             {
                 Application.SetSuspendState(PowerState.Suspend, true, true);
+                Environment.Exit(0);
             }
 
             Bitmap SaveScreenshot()
