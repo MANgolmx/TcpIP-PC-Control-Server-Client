@@ -38,7 +38,7 @@ namespace Server
 
             ipString = "192.168.1.102";
 
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ipString), 13002);
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ipString), 13031);
             listener = new TcpListener(ep);
             listener.Start();
             Console.WriteLine(@"  
@@ -66,7 +66,9 @@ namespace Server
                         string x = client.GetStream().Read(buffer, 0, bytesize).ToString();
                         var data = ASCIIEncoding.ASCII.GetString(buffer);
 
-                        if (data.ToUpper().Contains("LGT"))
+                        if (client.GetStream() == null) Console.WriteLine("Stream is null");
+
+                        if (data.ToUpper().Contains("CMD_LOGOUT"))
                         {
                             Console.WriteLine("Client disconnected! \n");
 
@@ -76,18 +78,18 @@ namespace Server
                             ClientConnnection();
                             continue;
                         }
-                        else if (data.ToUpper().Contains("SHTD"))
+                        else if (data.ToUpper().Contains("CMD_SHTD"))
                         {
                             Console.WriteLine("Pc is going to Shutdown!");
-                            data = data.Replace("SHTD4", "");
+                            data = data.Replace("CMD_SHTD4", "");
                             data = new String(data.Where(Char.IsDigit).ToArray());
                             if (data == "" || data == "0") data = "1";
                             Shutdown(Int32.Parse(data));
                         }
-                        else if (data.ToUpper().Contains("OPNAP"))
+                        else if (data.ToUpper().Contains("CMD_OPNAP"))
                         {
                             Console.Write("Opening app ");
-                            data = data.Replace("OPNAP ", "");
+                            data = data.Replace("CMD_OPNAP ", "");
                             data = new String(data.Where(Char.IsLetterOrDigit).ToArray());
                             Console.WriteLine(data.ToUpper());
 
@@ -95,7 +97,7 @@ namespace Server
                             foreach (var file in allFiles)
                                 Process.Start(file);
                         }
-                        else if (data.ToUpper().Contains("SLP"))
+                        else if (data.ToUpper().Contains("CMD_SLP"))
                         {
                             Console.WriteLine("Pc is going to Sleep Mode");
                             Sleep();
@@ -113,7 +115,8 @@ namespace Server
                     }
                     catch (Exception exc)
                     {
-                        Console.WriteLine("Something went wrong! \n");
+                        Console.WriteLine("Client disconnected because of error!");
+                        Console.WriteLine(exc.Message + "\n");
 
                         client.Dispose();
                         client.Close();
@@ -128,7 +131,7 @@ namespace Server
 
             void CheckConnection(Object source, System.Timers.ElapsedEventArgs e)
             {
-                if (client.Client.Poll(0, SelectMode.SelectRead))
+                if (client.Client.Poll(100, SelectMode.SelectRead))
                 {
                     Console.WriteLine("Client disconnected! \n");
 
@@ -141,6 +144,7 @@ namespace Server
                 checkConnectionTimer.Enabled = false;
 
                 client = listener.AcceptTcpClient();
+                //client = listener.AcceptTcpClientAsync().Result;
                 checkConnectionTimer.Enabled = true;
                 Console.WriteLine("Client connected!");
 

@@ -48,7 +48,7 @@ namespace Client.Activities
 
             void CheckConnection(Object source, System.Timers.ElapsedEventArgs e)
             {
-                if (client.Client.Poll(0, SelectMode.SelectRead))
+                if (client.Client.Poll(100, SelectMode.SelectRead))
                 {
                     disconnect(client);
                 }
@@ -60,7 +60,7 @@ namespace Client.Activities
             {
                 try {
                     stream = client.GetStream();
-                    String msg = "SLP";
+                    String msg = "CMD_SLP";
                     byte[] message = Encoding.ASCII.GetBytes(msg);
                     stream.Write(message, 0, message.Length);
                 }
@@ -73,7 +73,7 @@ namespace Client.Activities
             {
                 try {
                     stream = client.GetStream();
-                    String msg = "SHTD" + edtTime.Text;
+                    String msg = "CMD_SHTD" + edtTime.Text;
                     byte[] message = Encoding.ASCII.GetBytes(msg);
                     stream.Write(message, 0, message.Length);
                 } 
@@ -86,7 +86,7 @@ namespace Client.Activities
             {
                 try {
                     stream = client.GetStream();
-                    String msg = "TSC";
+                    String msg = "CMD_TSC";
                     byte[] message = Encoding.ASCII.GetBytes(msg);
                     stream.Write(message, 0, message.Length);
                     var data = getData(client);
@@ -103,9 +103,9 @@ namespace Client.Activities
                 if (edtAppName.Text == "" || edtAppName.Text == " ") return;
                 try {
                     stream = client.GetStream();
-                    String msg = "OPNAP " + edtAppName.Text;
+                    String msg = "CMD_OPNAP " + edtAppName.Text;
                     byte[] message = Encoding.ASCII.GetBytes(msg);
-                    stream.WriteAsync(message, 0, message.Length);
+                    stream.Write(message, 0, message.Length);
                 }
                 catch (Exception e) {
                     disconnect(client);
@@ -116,7 +116,7 @@ namespace Client.Activities
             {
                 try {
                     stream = client.GetStream();
-                    String msg = "LGT";
+                    String msg = "CMD_LOGOUT";
                     byte[] message = Encoding.ASCII.GetBytes(msg);
                     stream.Write(message, 0, message.Length);
                 }

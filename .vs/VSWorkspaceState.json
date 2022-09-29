@@ -4,8 +4,9 @@
     "\\AND-Client",
     "\\AND-Client\\Client",
     "\\AND-Client\\Client\\Activities",
-    "\\CMD-Server"
+    "\\CMD-Server",
+    "\\CMD-Server\\Server"
   ],
-  "SelectedNode": "\\AND-Client\\Client\\Activities\\Control.cs",
+  "SelectedNode": "\\CMD-Server\\Server\\Program.cs",
   "PreviewInSolutionExplorer": false
 }
