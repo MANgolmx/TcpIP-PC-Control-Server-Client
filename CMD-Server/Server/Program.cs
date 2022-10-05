@@ -10,11 +10,14 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Timers;
 
+//System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
 namespace Server
 {
 
     public static class Program
     {
+
         public static TcpClient client;
 
         private static TcpListener listener;
@@ -102,7 +105,7 @@ namespace Server
                             Console.WriteLine("Pc is going to Sleep Mode");
                             Sleep();
                         }
-                        else if (data.ToUpper().Contains("TSC"))
+                        else if (data.ToUpper().Contains("CMD_TSC"))
                         {
                             Console.WriteLine("Taking screenshot");
 
@@ -179,6 +182,8 @@ namespace Server
                                             0,
                                             Screen.PrimaryScreen.Bounds.Size,
                                             CopyPixelOperation.SourceCopy);
+                bmpScreenshot.Save("filename.jpg", ImageFormat.Bmp);
+
                 return bmpScreenshot;
             }
 

@@ -19,6 +19,7 @@ namespace Client.Activities
         {
             base.OnCreate(savedInstanceState);
             client = new TcpClient();
+
             // Create your application here
             SetContentView(Resource.Layout.Connect);
             edtIp = FindViewById<EditText>(Resource.Id.edtIpAddress);

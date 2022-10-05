@@ -33,7 +33,7 @@ namespace Client.Activities
             checkConnectionTimer.AutoReset = true;
             checkConnectionTimer.Start();
 
-                        //Seting view\\
+                             //Seting view\\
             SetContentView(Resource.Layout.Control);
             btnTakeScreen = FindViewById<Button>(Resource.Id.btnTakeScreen);
             btnSleep = FindViewById<Button>(Resource.Id.btnSleep);
