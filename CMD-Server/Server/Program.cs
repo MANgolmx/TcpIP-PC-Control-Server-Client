@@ -39,7 +39,15 @@ namespace Server
             checkConnectionTimer.Elapsed += CheckConnection;
             checkConnectionTimer.AutoReset = true;
 
-            ipString = "192.168.1.102";
+            IPAddress[] localIp = Dns.GetHostAddresses(Dns.GetHostName());
+            foreach (IPAddress address in localIp)
+            {
+                if (address.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    ipString = address.ToString();
+                    break;
+                }
+            }
 
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ipString), 13031);
             listener = new TcpListener(ep);
